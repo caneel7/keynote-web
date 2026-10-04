@@ -1,75 +1,65 @@
-# React + TypeScript + Vite
+# Keynote web
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
 
-Currently, two official plugins are available:
+## Tech Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- [React](https://react.dev) + [TypeScript](https://www.typescriptlang.org)
+- [Vite](https://vite.dev) (client-side rendered SPA)
+- [TanStack Router](https://tanstack.com/router) for routing
 
-## React Compiler
+## Getting Started
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Prerequisites
 
-## Expanding the ESLint configuration
+- Node.js 20+
+- npm
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+### Installation
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-
+```bash
+npm install
 ```
 
-You can also install [eslint-plugin-react-x](https://npmx.dev/package/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://npmx.dev/package/eslint-plugin-react-dom) for React-specific lint rules:
+### Development
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```bash
+npm run dev
+```
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+The app runs at `http://localhost:5173` by default.
+
+## Scripts
+
+| Command           | Description                       |
+| ----------------- | --------------------------------- |
+| `npm run dev`     | Start the dev server with HMR     |
+| `npm run build`   | Type-check and build for prod     |
+| `npm run preview` | Preview the production build      |
+| `npm run lint`    | Run ESLint                        |
+
+## Project Structure
 
 ```
+src/
+  features/        # One folder per feature (components, routes, logic)
+    landing/
+    auth/
+  router.ts        # Central route definitions
+  main.tsx         # App entry point
+```
+
+Each feature is self-contained. To add a new one, create a folder under `src/features/` and register its routes in `src/router.ts`.
+
+## Routing
+
+All routes are defined in `src/router.ts` using TanStack Router. The router instance is registered globally, so `Link`, `useNavigate`, and route params are fully type-safe.
+
+## Environment Variables
+
+Vite only exposes variables prefixed with `VITE_`:
+
+```bash
+VITE_API_URL=http://localhost:8080
+```
+
+Copy `.env.example` to `.env` and adjust as needed.
